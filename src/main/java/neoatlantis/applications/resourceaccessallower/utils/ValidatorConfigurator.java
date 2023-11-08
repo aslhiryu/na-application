@@ -15,7 +15,6 @@ import neoatlantis.accesscontroller.resourceAccessAllower.interfaces.TypeExcepti
 import neoatlantis.applications.web.listeners.AccessControllerPublisher;
 import neoatlantis.applications.web.listeners.BlockerSessionListener;
 import neoatlantis.applications.web.listeners.SessionListener;
-import neoatlantis.applications.web.objects.ApplicationSession;
 import neoatlantis.utils.configurations.ClassGenerator;
 import org.apache.log4j.Logger;
 import org.jdom.*;

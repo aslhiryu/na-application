@@ -5,11 +5,11 @@ import java.util.List;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpServletRequest;
-import neoatlantis.applications.web.objects.ApplicationSession;
 import neoatlantis.accesscontroller.objects.Browser;
 import neoatlantis.accesscontroller.objects.OperatingSystem;
+import neoatlantis.applications.web.objects.ApplicationSessionWeb;
 import neoatlantis.applications.web.objects.RequestStatistics;
-import neoatlantis.applications.web.utils.ParameterCleaner;
+import neoatlantis.utils.web.ParameterCleaner;
 import org.apache.log4j.Logger;
 
 /**
@@ -43,7 +43,7 @@ public class PageListener implements ServletRequestListener {
             SessionListener.setIP(request);
             SessionListener.setOS(request);
             sre.getServletRequest().setAttribute(LOAD_TIME_KEY, (new Date()).getTime());
-            updateActivity((List<ApplicationSession>)sre.getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY), request.getSession().getId());
+            updateActivity((List<ApplicationSessionWeb>)sre.getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY), request.getSession().getId());
         }        
     }
 
@@ -75,7 +75,7 @@ public class PageListener implements ServletRequestListener {
      * @param sesiones Lista de sesiones activas
      * @param sesion  Id de la sesion a actualizar
      */
-    public void updateActivity(List<ApplicationSession> sesiones, String sesion) {
+    public void updateActivity(List<ApplicationSessionWeb> sesiones, String sesion) {
         for(int i=0; sesiones!=null && i<sesiones.size(); i++){
             if( sesiones.get(i).getId().equals(sesion)!=false ) {
                 sesiones.get(i).setLastActivity(new Date());
@@ -91,7 +91,7 @@ public class PageListener implements ServletRequestListener {
     
     public static OperatingSystem getOperatingSystem(HttpServletRequest request){
         //recupero las sesiones activas
-        List<ApplicationSession> sesTmp=(List<ApplicationSession>)request.getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
+        List<ApplicationSessionWeb> sesTmp=(List<ApplicationSessionWeb>)request.getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
         
         for(int i=0; sesTmp!=null&&i<sesTmp.size(); i++){
             if( sesTmp.get(i).getHttpSession()!=null && request.getSession().getId().equals( sesTmp.get(i).getHttpSession().getId() ) ){
@@ -104,7 +104,7 @@ public class PageListener implements ServletRequestListener {
 
     public static Browser getBrowser(HttpServletRequest request){
         //recupero las sesiones activas
-        List<ApplicationSession> sesTmp=(List<ApplicationSession>)request.getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
+        List<ApplicationSessionWeb> sesTmp=(List<ApplicationSessionWeb>)request.getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
         
         for(int i=0; sesTmp!=null&&i<sesTmp.size(); i++){
             if( sesTmp.get(i).getHttpSession()!=null && request.getSession().getId().equals( sesTmp.get(i).getHttpSession().getId() ) ){

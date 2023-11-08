@@ -18,7 +18,7 @@
         <dependency>
           <groupId>neoatlantis</groupId>
           <artifactId>na-entity</artifactId>
-          <version>2.0</version>
+          <version>2.1</version>
         </dependency>
         <dependency>
           <groupId>neoatlantis</groupId>
@@ -64,7 +64,21 @@
                 <repository>
                     <id>github</id>
                     <name>GH Hiryu</name>
+                    <url>https://maven.pkg.github.com/aslhiryu/na-utils</url>
+                    <snapshots><enabled>true</enabled></snapshots>
+                    <releases><enabled>true</enabled></releases>
+                </repository>
+                <repository>
+                    <id>github2</id>
+                    <name>GH Hiryu</name>
                     <url>https://maven.pkg.github.com/aslhiryu/na-entity</url>
+                    <snapshots><enabled>true</enabled></snapshots>
+                    <releases><enabled>true</enabled></releases>
+                </repository>
+                <repository>
+                    <id>github3</id>
+                    <name>GH Hiryu</name>
+                    <url>https://maven.pkg.github.com/aslhiryu/na-athenticator</url>
                     <snapshots><enabled>true</enabled></snapshots>
                     <releases><enabled>true</enabled></releases>
                 </repository>

@@ -7,6 +7,7 @@ import neoatlantis.accesscontroller.printer.exceptions.FormatterException;
 import neoatlantis.accesscontroller.printer.interfaces.RoleAdministratorPrinter;
 import neoatlantis.applications.web.UtilsAuthenticatorBean;
 import neoatlantis.applications.web.utils.AuthenticationResourcesLoader;
+import neoatlantis.applications.web.utils.ResourcesLoader;
 
 /**
  *

@@ -9,6 +9,7 @@ import neoatlantis.accesscontroller.blocker.interfaces.BlockType;
 import neoatlantis.accesscontroller.blocker.interfaces.BlockerWay;
 import neoatlantis.accesscontroller.exceptions.WayAccessException;
 import neoatlantis.accesscontroller.objects.User;
+import neoatlantis.applications.web.listeners.BlockerSessionListener;
 import org.apache.log4j.Logger;
 
 /**

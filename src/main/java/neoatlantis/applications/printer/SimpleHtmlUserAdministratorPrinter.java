@@ -171,13 +171,13 @@ public class SimpleHtmlUserAdministratorPrinter implements UserAdministratorPrin
         sb.append("<h1>Nuevo Usuario</h1>\n");
         sb.append("<dl>\n");
         sb.append("<dt >Nombre</dt>\n");
-        sb.append("<dd><input name=\"").append(NAME_DATA).append("\" id=\"").append(NAME_DATA).append("\" value=\"").append(request.getParameter(NAME_DATA)!=null? request.getParameter(NAME_DATA): "").append("\" /></dd>\n");
+        sb.append("<dd><input name=\"").append(AuthenticationWay.NAME_PARAM).append("\" id=\"").append(AuthenticationWay.NAME_PARAM).append("\" value=\"").append(request.getParameter(AuthenticationWay.NAME_PARAM)!=null? request.getParameter(AuthenticationWay.NAME_PARAM): "").append("\" /></dd>\n");
         sb.append("<dt>Usuario</dt>\n");
         sb.append("<dd><input name=\"").append(AuthenticationWay.USER_DATA).append("\" id=\"").append(AuthenticationWay.USER_DATA).append("\" value=\"").append(request.getParameter(AuthenticationWay.USER_DATA)!=null? request.getParameter(AuthenticationWay.USER_DATA): "").append("\" /></dd>\n");
         sb.append("<dt>Contrase&ntilde;a</dt>\n");
-        sb.append("<dd><input name=\"").append(PASSWORD_DATA).append("\" id=\"").append(PASSWORD_DATA).append("\" value=\"").append(request.getParameter(PASSWORD_DATA)!=null? request.getParameter(PASSWORD_DATA): "").append("\" /></dd>\n");
+        sb.append("<dd><input name=\"").append(AuthenticationWay.PASS_PARAM).append("\" id=\"").append(AuthenticationWay.PASS_PARAM).append("\" value=\"").append(request.getParameter(AuthenticationWay.PASS_PARAM)!=null? request.getParameter(AuthenticationWay.PASS_PARAM): "").append("\" /></dd>\n");
         sb.append("<dt>Correo</dt>\n");
-        sb.append("<dd><input name=\"").append(EMAIL_DATA).append("\" id=\"").append(EMAIL_DATA).append("\" value=\"").append(request.getParameter(EMAIL_DATA)!=null? request.getParameter(EMAIL_DATA): "").append("\" /></dd>\n");
+        sb.append("<dd><input name=\"").append(AuthenticationWay.MAIL_PARAM).append("\" id=\"").append(AuthenticationWay.MAIL_PARAM).append("\" value=\"").append(request.getParameter(AuthenticationWay.MAIL_PARAM)!=null? request.getParameter(AuthenticationWay.MAIL_PARAM): "").append("\" /></dd>\n");
         sb.append("</dl>\n");
         sb.append("<div class=\"NA_Controls\">\n");
         sb.append("<button id=\"NA:CreateButton\" class=\"NA_Controls_addUser\"  type=\"submit\">Crear</button>\n");
@@ -211,9 +211,9 @@ public class SimpleHtmlUserAdministratorPrinter implements UserAdministratorPrin
         sb.append("<dt>Usuario</dt>\n");
         sb.append("<dd>").append(((User)params.get(UtilsAuthenticatorBean.USER_PARAM)).getUser()).append("</dd>\n");
         sb.append("<dt>Nombre</dt>\n");
-        sb.append("<dd><input name=\"").append(NAME_DATA).append("\" id=\"").append(NAME_DATA).append("\" value=\"").append(((User)params.get(UtilsAuthenticatorBean.USER_PARAM)).getName()).append("\" /></dd>\n");
+        sb.append("<dd><input name=\"").append(AuthenticationWay.NAME_PARAM).append("\" id=\"").append(AuthenticationWay.NAME_PARAM).append("\" value=\"").append(((User)params.get(UtilsAuthenticatorBean.USER_PARAM)).getName()).append("\" /></dd>\n");
         sb.append("<dt>Correo</dt>\n");
-        sb.append("<dd><input name=\"").append(EMAIL_DATA).append("\" id=\"").append(EMAIL_DATA).append("\" value=\"").append(((User)params.get(UtilsAuthenticatorBean.USER_PARAM)).getMail()).append("\" /></dd>\n");
+        sb.append("<dd><input name=\"").append(AuthenticationWay.MAIL_PARAM).append("\" id=\"").append(AuthenticationWay.MAIL_PARAM).append("\" value=\"").append(((User)params.get(UtilsAuthenticatorBean.USER_PARAM)).getMail()).append("\" /></dd>\n");
         sb.append("</dl>\n");
         sb.append("<div class=\"NA_Controls\">\n");
         sb.append("<button id=\"NA:UpdateButton\" class=\"NA_Ccontrols_setUser\"  type=\"submit\"><div />Modificar</button>\n");

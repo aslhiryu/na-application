@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import neoatlantis.applications.parameters.objects.MemoryParameters;
 import neoatlantis.applications.web.listeners.ApplicationListener;
-import neoatlantis.applications.web.objects.ApplicationSession;
+import neoatlantis.applications.web.objects.ApplicationSessionWeb;
 import org.apache.log4j.Logger;
 
 /**
@@ -24,13 +24,13 @@ public class AdminAppServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String salida;
-        List<ApplicationSession> sess;
+        List<ApplicationSessionWeb> sess;
         MemoryParameters mp;
 
         DEBUGER.debug("Se realiza una solicitud al servlet de administración de aplicación, con operación '"+request.getParameter(OPERATION_PARAM)+"' y solicitante '"+request.getParameter(SESSION_PARAM)+"'");
         
         //recupero las sesiones del sistema
-        sess=(List<ApplicationSession>)request.getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
+        sess=(List<ApplicationSessionWeb>)request.getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
         mp=(MemoryParameters)request.getServletContext().getAttribute(ApplicationListener.PARAMETERS_KEY);
         if( sess!=null ){
             //revisa que sea una sesion valida
@@ -82,7 +82,7 @@ public class AdminAppServlet extends HttpServlet {
     
     // metodos privados --------------------------------------------------------
     
-    private boolean existSession(List<ApplicationSession> sessions, String session){
+    private boolean existSession(List<ApplicationSessionWeb> sessions, String session){
         for(int i=0; sessions!=null&&i<sessions.size(); i++){
             if( sessions.get(i).getHttpSession().getId().equals(session) ){
                 return true;

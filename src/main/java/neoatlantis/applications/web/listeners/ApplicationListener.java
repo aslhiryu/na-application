@@ -15,6 +15,7 @@ import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import neoatlantis.accesscontroller.utils.UtilCaptchaBean;
 import neoatlantis.applications.jmx.*;
 import neoatlantis.applications.parameters.interfaces.MemoryParametersLoader;
 import neoatlantis.applications.parameters.objects.MemoryParameters;
@@ -23,7 +24,7 @@ import neoatlantis.applications.printer.interfaces.NavigationPrinter;
 import neoatlantis.applications.printer.interfaces.ParameterAdministratorPrinter;
 import neoatlantis.applications.web.AdminAppServlet;
 import neoatlantis.applications.web.filters.EncodingFilter;
-import neoatlantis.applications.web.objects.ApplicationSession;
+import neoatlantis.applications.web.objects.ApplicationSessionWeb;
 import neoatlantis.applications.web.objects.RequestStatistics;
 import neoatlantis.applications.web.utils.ResourcesLoader;
 import neoatlantis.utils.captcha.interfaces.CaptchaPainter;
@@ -68,7 +69,7 @@ public class ApplicationListener implements ServletContextListener {
     private String rutaLog="./";
     private String ver="N/D";
     private String app="Indefinida";
-    private List<ApplicationSession> sesiones;
+    private List<ApplicationSessionWeb> sesiones;
     private boolean configLogger=false;
     private Properties configMail;
     private Element nodoAccessControler;
@@ -380,7 +381,7 @@ public class ApplicationListener implements ServletContextListener {
                 //para generador de codigos
                 eTmp = root.getChild("codeGenerator");
                 if (eTmp != null) {
-                    context.setAttribute(CODE_GENERATOR_KEY, this.makeCodeConfirmation(eTmp, entorno));
+                    context.setAttribute(UtilCaptchaBean.CODE_GENERATOR_KEY, this.makeCodeConfirmation(eTmp, entorno));
                 }
                 
                 //para catalogos
@@ -416,7 +417,7 @@ public class ApplicationListener implements ServletContextListener {
         javax.servlet.ServletRegistration.Dynamic dimRequest;
         
         //inicio la coleccion de sesiones
-        this.sesiones=Collections.synchronizedList(new ArrayList<ApplicationSession>());
+        this.sesiones=Collections.synchronizedList(new ArrayList<ApplicationSessionWeb>());
         estadisticaPagina=new RequestStatistics();
         estadisticaSesion=new RequestStatistics();
         

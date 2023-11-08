@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import neoatlantis.accesscontroller.AccessController;
 import neoatlantis.accesscontroller.objects.User;
-import neoatlantis.applications.web.objects.ApplicationSession;
+import neoatlantis.applications.web.objects.ApplicationSessionWeb;
 import org.apache.log4j.Logger;
 
 /**
@@ -148,7 +148,7 @@ public class BlockerSessionListener  implements HttpSessionListener{
         req.getSession().setAttribute(AccessControllerPublisher.USER_KEY, u);
         
         //revisa si existe sesion cargada por el api de NaApp
-        List<ApplicationSession> sesiones=(List<ApplicationSession>)req.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
+        List<ApplicationSessionWeb> sesiones=(List<ApplicationSessionWeb>)req.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
         
         DEBUGER.debug("Existen "+(sesiones!=null? sesiones.size(): -1)+" sesiones activas.");
         for(int i=0; sesiones!=null&&i<sesiones.size(); i++){
@@ -161,7 +161,7 @@ public class BlockerSessionListener  implements HttpSessionListener{
         }
 
         if( !existe ){
-            u.newSession(new ApplicationSession(req.getSession(), req.getRemoteAddr()));
+            u.newSession(new ApplicationSessionWeb(req.getSession(), req.getRemoteAddr()));
         }
         
         createSessionCookie(req, res, u);
@@ -181,7 +181,7 @@ public class BlockerSessionListener  implements HttpSessionListener{
         DEBUGER.debug("Genero la cookie de la sesion del  usuario: "+u.getUser());
         Cookie cook=new Cookie(HTTP_SESSION_COOKIE, u.getSession().getId());
         cook.setPath("/");
-        cook.setMaxAge(u.getSession().getHttpSession().getMaxInactiveInterval());        
+        cook.setMaxAge(((ApplicationSessionWeb)u.getSession()).getHttpSession().getMaxInactiveInterval());        
         cook.setSecure(true);
         res.addCookie(cook);        
     }
@@ -212,7 +212,7 @@ public class BlockerSessionListener  implements HttpSessionListener{
             try{
                 for(User uTmp: ctrl.validateInactiveSessions()){
                     ctrl.ends(uTmp);
-                    endSession(uTmp.getSession().getHttpSession());
+                    endSession(((ApplicationSessionWeb)uTmp.getSession()).getHttpSession());
                     DEBUGER.debug("Destruyo la sesion para "+uTmp.getUser()+" por tiempo de vida");
                 }
             }
@@ -228,7 +228,7 @@ public class BlockerSessionListener  implements HttpSessionListener{
                         
                         if( uTmp.getActivityDate()!=null && (new Date()).getTime()>uTmp.getActivityDate().getTime()+tiempoPing ){
                             ctrl.ends(uTmp);
-                            endSession(uTmp.getSession().getHttpSession());
+                            endSession(((ApplicationSessionWeb)uTmp.getSession()).getHttpSession());
                             DEBUGER.debug("Destruyo la sesion para "+uTmp.getUser()+" por ping excedido");
                         }
                     }

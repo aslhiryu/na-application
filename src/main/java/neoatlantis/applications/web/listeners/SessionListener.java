@@ -6,9 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import neoatlantis.applications.web.objects.ApplicationSession;
 import neoatlantis.accesscontroller.objects.Browser;
 import neoatlantis.accesscontroller.objects.OperatingSystem;
+import neoatlantis.applications.web.objects.ApplicationSessionWeb;
 import neoatlantis.applications.web.objects.RequestStatistics;
 import neoatlantis.applications.web.objects.UserRequest;
 import org.apache.log4j.Logger;
@@ -23,17 +23,17 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent hse) {
         //recupero las sesiones activas
-        List<ApplicationSession> sesTmp=(List<ApplicationSession>)hse.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
+        List<ApplicationSessionWeb> sesTmp=(List<ApplicationSessionWeb>)hse.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
         boolean existe=false;
         
-        for(ApplicationSession s: sesTmp){
+        for(ApplicationSessionWeb s: sesTmp){
             if( s.getHttpSession().getId().equals(hse.getSession().getId()) ){
                 existe=true;
                 break;
             }
         }
         if( !existe ){
-            sesTmp.add(new ApplicationSession(hse.getSession()));
+            sesTmp.add(new ApplicationSessionWeb(hse.getSession()));
             DEBUGGER.debug("Se genera la sesión "+hse.getSession().getId()+".");
         }
         DEBUGGER.debug("Se genera una nueva sesion, existen "+sesTmp.size()+" sesiones.");
@@ -42,7 +42,7 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionDestroyed(HttpSessionEvent hse) {        
-        List<ApplicationSession> sesTmp=Collections.synchronizedList( (List<ApplicationSession>)hse.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY) );
+        List<ApplicationSessionWeb> sesTmp=Collections.synchronizedList( (List<ApplicationSessionWeb>)hse.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY) );
         
         removeSession(sesTmp, hse.getSession().getId());
         validateSession(sesTmp,hse.getSession().getMaxInactiveInterval());
@@ -64,9 +64,9 @@ public class SessionListener implements HttpSessionListener {
      * @param lis Lista de sesiones
      * @param dur Duración de la sesión
      */
-    public static void validateSession(List<ApplicationSession> lis, long dur) {
+    public static void validateSession(List<ApplicationSessionWeb> lis, long dur) {
         DEBUGGER.debug("Revisa el vencimiento de las sesiones ("+dur+" segs).");        
-        ApplicationSession s;
+        ApplicationSessionWeb s;
         
         synchronized(lis){
             for(int i=0; lis!=null&&i<lis.size(); i++){
@@ -93,11 +93,11 @@ public class SessionListener implements HttpSessionListener {
      */
     public static void saveLastRequest(HttpServletRequest req){
         DEBUGGER.debug("Guarda la ultima peticion realizada en la sesion");
-        List<ApplicationSession> sesTmp=(List<ApplicationSession>)req.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
+        List<ApplicationSessionWeb> sesTmp=(List<ApplicationSessionWeb>)req.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
         
-        for(ApplicationSession s: sesTmp){
+        for(ApplicationSessionWeb s: sesTmp){
             if( s.getHttpSession().getId().equals(req.getSession().getId()) ){
-                s.setLastRequest( ApplicationSession.parseRequest(req) );
+                s.setLastRequest( ApplicationSessionWeb.parseRequest(req) );
                 DEBUGGER.debug("Asigno la ultima peticion realizada: "+s.getLastRequest());
                 break;
             }
@@ -110,9 +110,9 @@ public class SessionListener implements HttpSessionListener {
      */
     public static void clearLastRequest(HttpServletRequest req){
         DEBUGGER.debug("Guarda la ultima peticion realizada en la sesion");
-        List<ApplicationSession> sesTmp=(List<ApplicationSession>)req.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
+        List<ApplicationSessionWeb> sesTmp=(List<ApplicationSessionWeb>)req.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
         
-        for(ApplicationSession s: sesTmp){
+        for(ApplicationSessionWeb s: sesTmp){
             if( s.getHttpSession().getId().equals(req.getSession().getId()) ){
                 s.setLastRequest(null);
                 DEBUGGER.debug("Limpia la ultima peticion realizada.");
@@ -128,9 +128,9 @@ public class SessionListener implements HttpSessionListener {
      */
     public static UserRequest getLastRequest(HttpServletRequest req){
         DEBUGGER.debug("Recupera la ultima peticion realizada en la sesion");
-        List<ApplicationSession> sesTmp=(List<ApplicationSession>)req.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
+        List<ApplicationSessionWeb> sesTmp=(List<ApplicationSessionWeb>)req.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
         
-        for(ApplicationSession s: sesTmp){
+        for(ApplicationSessionWeb s: sesTmp){
             if( s.getHttpSession().getId().equals(req.getSession().getId()) ){
                 return s.getLastRequest();
             }
@@ -144,10 +144,10 @@ public class SessionListener implements HttpSessionListener {
      * @param req Peticion web
      */
     public static void setIP(HttpServletRequest req){
-        List<ApplicationSession> sesTmp=(List<ApplicationSession>)req.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
+        List<ApplicationSessionWeb> sesTmp=(List<ApplicationSessionWeb>)req.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
         DEBUGGER.debug("Intento asignar IP.");
         
-        for(ApplicationSession s: sesTmp){
+        for(ApplicationSessionWeb s: sesTmp){
             if( s.getHttpSession().getId().equals(req.getSession().getId()) && s.getIp().equals("0.0.0.0") ){
                 s.setIp(req.getRemoteAddr());
                 DEBUGGER.debug("Se asigna la IP "+s.getIp()+" a la sesión "+s.getId()+".");
@@ -161,9 +161,9 @@ public class SessionListener implements HttpSessionListener {
      * @param req Petición del cliente
      */
     public static void setOS(HttpServletRequest req){
-        List<ApplicationSession> sesTmp=(List<ApplicationSession>)req.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
+        List<ApplicationSessionWeb> sesTmp=(List<ApplicationSessionWeb>)req.getSession().getServletContext().getAttribute(ApplicationListener.SESSIONS_KEY);
         
-        for(ApplicationSession s: sesTmp){
+        for(ApplicationSessionWeb s: sesTmp){
             if( s.getHttpSession().getId().equals(req.getSession().getId()) && s.getBrowser()==null ){
                 DEBUGGER.debug("User-Agent: "+req.getHeader("user-agent")+".");
                 
@@ -275,10 +275,10 @@ public class SessionListener implements HttpSessionListener {
     
     // MP-----------------------------------------------------------------------
 
-    private static void removeSession(List<ApplicationSession> lis, String ses){
+    private static void removeSession(List<ApplicationSessionWeb> lis, String ses){
         DEBUGGER.debug("Sesion a eliminar '"+ses+"'.");
 
-        for(ApplicationSession s: lis){
+        for(ApplicationSessionWeb s: lis){
             if( s.getId().equals(ses)   || (s.getHttpSession()!=null && s.getHttpSession().getId().equals(ses)) ){
                 lis.remove(s);
                 

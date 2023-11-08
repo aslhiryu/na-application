@@ -12,6 +12,7 @@ import javax.imageio.ImageWriter;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import neoatlantis.accesscontroller.utils.UtilCaptchaBean;
 import neoatlantis.applications.web.listeners.ApplicationListener;
 import neoatlantis.applications.web.utils.ResourcesLoader;
 import neoatlantis.utils.captcha.interfaces.CaptchaPainter;
@@ -46,8 +47,8 @@ public class CaptchaImageServlet  extends HttpServlet {
         else{
             logger.warn("No se ha definido un 'CaptchaPainter'");
         }
-        if( this.getServletContext().getAttribute(ApplicationListener.CODE_GENERATOR_KEY)!=null ){
-            this.codigo=(ConfirmationCode)this.getServletContext().getAttribute(ApplicationListener.CODE_GENERATOR_KEY);
+        if( this.getServletContext().getAttribute(UtilCaptchaBean.CODE_GENERATOR_KEY)!=null ){
+            this.codigo=(ConfirmationCode)this.getServletContext().getAttribute(UtilCaptchaBean.CODE_GENERATOR_KEY);
         }
         else{
             logger.warn("No se ha definido un 'CaptchaPainter'");
@@ -88,9 +89,9 @@ public class CaptchaImageServlet  extends HttpServlet {
                 logger.debug("Pinto el captcha con: "+this.captcha.getClass());
                 logger.debug("Genero el codigo con: "+this.codigo.getClass());
                 //almaceno el valor en la sesion
-                request.getSession().setAttribute(ApplicationListener.CODE_CONFIRMATION_KEY, this.codigo.create());
-                logger.debug("Prepara codigo de confirmacion: "+request.getSession().getAttribute(ApplicationListener.CODE_CONFIRMATION_KEY));
-                Image im=this.captcha.paint((String)request.getSession().getAttribute(ApplicationListener.CODE_CONFIRMATION_KEY));
+                request.getSession().setAttribute(UtilCaptchaBean.CODE_CONFIRMATION_KEY, this.codigo.create());
+                logger.debug("Prepara codigo de confirmacion: "+request.getSession().getAttribute(UtilCaptchaBean.CODE_CONFIRMATION_KEY));
+                Image im=this.captcha.paint((String)request.getSession().getAttribute(UtilCaptchaBean.CODE_CONFIRMATION_KEY));
                 BufferedImage i=new BufferedImage(im.getWidth(null), im.getHeight(null), BufferedImage.TYPE_3BYTE_BGR);
                 Graphics2D g2d = i.createGraphics();
                 

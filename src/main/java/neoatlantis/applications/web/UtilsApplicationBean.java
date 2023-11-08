@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
+import neoatlantis.accesscontroller.utils.UtilCaptchaBean;
 import neoatlantis.applications.exceptions.ApplicationException;
 import neoatlantis.applications.parameters.interfaces.MemoryParametersLoader;
 import neoatlantis.applications.parameters.objects.MemoryParameters;
@@ -402,7 +403,7 @@ public class UtilsApplicationBean {
         sb.append("<dl>\n");
         sb.append("<dt>Introduce el c&oacute;digo:</dt>\n");
         sb.append("<dd>\n");
-        sb.append("<input type=\"text\" id=\"").append(PageListener.CAPTCHA_PARAM).append("\" name=\"").append(PageListener.CAPTCHA_PARAM).append("\" placeholder=\"Ingresa el c&oacute;digo\" />\n");
+        sb.append("<input type=\"text\" id=\"").append(UtilCaptchaBean.CAPTCHA_PARAM).append("\" name=\"").append(UtilCaptchaBean.CAPTCHA_PARAM).append("\" placeholder=\"Ingresa el c&oacute;digo\" />\n");
         sb.append("</dd>\n");
         sb.append("<dt>C&oacute;digo:</dt>\n");
         sb.append("<dd>\n");
