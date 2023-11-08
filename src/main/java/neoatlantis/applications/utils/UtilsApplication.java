@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import neoatlantis.applications.parameters.interfaces.MemoryParametersLoader;
-import neoatlantis.applications.web.objects.OperatingSystem;
+import neoatlantis.accesscontroller.objects.OperatingSystem;
 import neoatlantis.utils.configurations.ClassGenerator;
 import org.apache.log4j.Logger;
 import org.jdom.Document;

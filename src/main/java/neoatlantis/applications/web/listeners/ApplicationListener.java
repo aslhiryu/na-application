@@ -61,8 +61,6 @@ public class ApplicationListener implements ServletContextListener {
     public static final String PARAMS_ADMIN_PRINTER_KEY="na.util.app.printers.ParamsAdministration";
     public static final String LOG_VIEWER_PRINTER_KEY="na.util.app.printers.LogViewer";
     public static final String CAPTCHA_PAINTER_KEY="na.util.app.printers.CatcharPainter";
-    public static final String CODE_CONFIRMATION_KEY="na.util.app.codeConfimation";
-    public static final String CODE_GENERATOR_KEY="na.util.app.generatorCode";
     public static final String NAVIGATION_PRINTER_KEY="na.util.app.printers.Navigator";
 
     private boolean debug=false;

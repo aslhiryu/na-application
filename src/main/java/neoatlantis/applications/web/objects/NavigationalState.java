@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import neoatlantis.entity.SimpleEntity;
-import neoatlantis.applications.web.listeners.PageListener;
 import neoatlantis.utils.catalogs.objects.OrderMode;
 import org.apache.log4j.Logger;
 

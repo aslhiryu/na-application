@@ -20,7 +20,6 @@ import neoatlantis.applications.web.objects.NavigationalState;
 import neoatlantis.applications.web.utils.ResourcesLoader;
 import neoatlantis.utils.configurations.ConfigurationUtils;
 import neoatlantis.utils.data.DataUtils;
-import neoatlantis.utils.data.interfaces.ConfirmationCode;
 import org.apache.log4j.Logger;
 
 /**
@@ -29,7 +28,6 @@ import org.apache.log4j.Logger;
  */
 public class UtilsApplicationBean {
     private static final Logger DEBUGER = Logger.getLogger(UtilsApplicationBean.class);    
-//    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("messages");
     
     public static final String OPERATION_PARAM="NA_Operation";
     public static final String CAPTCHA_IMAGE_ID="NA:Captcha_Image";
@@ -395,27 +393,6 @@ public class UtilsApplicationBean {
     
     public static String getCaptchaPath(HttpServletRequest request){
         return request.getContextPath()+ResourcesLoader.PATH_CAPTCHA;
-    }
-    
-    public static  boolean validateConfirmationCode(HttpServletRequest request, String code){
-        String actual=(String)request.getSession().getAttribute(ApplicationListener.CODE_CONFIRMATION_KEY);
-        ConfirmationCode codigo=(ConfirmationCode)request.getServletContext().getAttribute(ApplicationListener.CODE_GENERATOR_KEY);
-        
-        if( codigo==null ){
-            throw new RuntimeException("No se tiene deinido un ''codeGenerator.");
-        }
-        
-        DEBUGER.debug("Codido original: "+actual);
-        DEBUGER.debug("Codido a validar: "+code);
-        
-        if( actual!=null && actual.equalsIgnoreCase(code) ){
-            return true;
-        }
-        else{
-            request.getSession().setAttribute(ApplicationListener.CODE_CONFIRMATION_KEY, codigo.create());
-            
-            return false;
-        }
     }
     
     public static String printHtmlCaptcha(HttpServletRequest request){

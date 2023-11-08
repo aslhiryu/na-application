@@ -29,14 +29,6 @@ public class UtilsAuthenticatorBean {
     public static final String ID_PARAM="NA_id";
     public static final String USER_PARAM="NA_user";
     public static final String ROLE_PARAM="NA_role";
-    /**
-     * Clave para el parametro que alberga el id del administrador que realizo la operacion
-     */
-    public static final String ID_ADMIN_PARAM="NA_idAdmin";
-    /**
-     * Clave para el parametro que alberga el nombre del administrador que realizo la operacion
-     */
-    public static final String NAME_ADMIN_PARAM="NA_nameAdmin";
     
     
     

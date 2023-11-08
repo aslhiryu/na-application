@@ -6,8 +6,8 @@ import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpServletRequest;
 import neoatlantis.applications.web.objects.ApplicationSession;
-import neoatlantis.applications.web.objects.Browser;
-import neoatlantis.applications.web.objects.OperatingSystem;
+import neoatlantis.accesscontroller.objects.Browser;
+import neoatlantis.accesscontroller.objects.OperatingSystem;
 import neoatlantis.applications.web.objects.RequestStatistics;
 import neoatlantis.applications.web.utils.ParameterCleaner;
 import org.apache.log4j.Logger;
@@ -20,7 +20,6 @@ public class PageListener implements ServletRequestListener {
     private static final Logger DEBUGGER=Logger.getLogger(PageListener.class);
 
     //Nombre de los parametros de formularios de las paginas
-    public static final String CAPTCHA_PARAM="NA:Captcha";
     public static final String ORDER_PARAM = "NA_DataOrder";
     public static final String PAGE_PARAM = "NA_DataPage";
     public static final String DESCENDING_PARAM = "NA_DataModeOrder";
